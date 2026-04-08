@@ -18,6 +18,10 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
     and return a list of delays in ascending order.
     """
     coroutines = [wait_random(max_delay) for _ in range(n)]
-    results = await asyncio.gather(*coroutines)
+    results: List[float] = []
+
+    for coro in asyncio.as_completed(coroutines):
+        delay = await coro
+        results.append(delay)
 
     return results
