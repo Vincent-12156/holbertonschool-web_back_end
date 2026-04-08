@@ -1,30 +1,20 @@
 #!/usr/bin/env python3
 """
-Module to run multiple wait_random coroutines concurrently
+Module that executes multiple wait_random coroutines concurrently
+and returns their results.
 """
 
 import asyncio
-from random import uniform
+from typing import List
+from 0-basic_async_syntax import wait_random
 
 
-async def wait_random(max_delay: int = 10) -> float:
-    """Waits for a random delay between 0 and max_delay seconds."""
-    delay = uniform(0, max_delay)
-    await asyncio.sleep(delay)
-    return delay
-
-
-async def wait_n(n: int, max_delay: int) -> list[float]:
+async def wait_n(n: int, max_delay: int) -> List[float]:
     """
-    Spawn wait_random n times with max_delay.
-    Returns list of delays in the order they completed
-    (ascending by completion time)
+    Spawn wait_random n times with the specified max_delay
+    and return a list of delays in ascending order.
     """
     coroutines = [wait_random(max_delay) for _ in range(n)]
-    delays = []
+    results = await asyncio.gather(*coroutines)
 
-    for coro in asyncio.as_completed(coroutines):
-        result = await coro
-        delays.append(result)
-
-    return delays
+    return results
