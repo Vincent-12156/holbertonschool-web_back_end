@@ -6,7 +6,10 @@ and returns their results.
 
 import asyncio
 from typing import List
-from 0-basic_async_syntax import wait_random
+import importlib
+
+
+wait_random = importlib.import_module('0-basic_async_syntax').wait_random
 
 
 async def wait_n(n: int, max_delay: int) -> List[float]:
