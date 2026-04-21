@@ -58,9 +58,10 @@ class Server:
                 result_data.append(data[current_index])
             current_index += 1
 
-        return {
-            "index": index,
-            "data": result_data,
-            "page_size": len(result_data),
-            "next_index": current_index,
+        dict = {
+                "index": index,
+                "data": result_data,
+                "page_size": len(result_data),
+                "next_index": current_index,
         }
+        return dict
