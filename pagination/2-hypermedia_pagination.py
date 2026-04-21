@@ -59,22 +59,25 @@ class Server:
         """
         Return hypermedia pagination information for the dataset.
         """
-        data_page = self.get_page(page, page_size)
-        data = self.dataset()
+        data = self.get_page(page, page_size)
         total_items = len(data)
-
         total_pages = math.ceil(total_items / page_size)
 
-        next_page: Optional[int] = {
-            page + 1 if page + 1 <= total_pages else None
-        }
-        prev_page: Optional[int] = page - 1 if page > 1 else None
+        if page == 1:
+            prev_page = None
+        else:
+            prev_page = page - 1
 
-        return {
-            "page_size": len(data_page),
-            "page": page,
-            "data": data_page,
-            "next_page": next_page,
-            "prev_page": prev_page,
-            "total_pages": total_pages,
+        if page == total_pages:
+            next_page = None
+        else:
+            next_page = page + 1
+
+        dict = {
+            "page_size": page_size,
+            "page": page, "data": data,
+            "next_page": next_page, "prev_page": prev_page,
+            "total_pages": total_pages
         }
+
+        return dict
