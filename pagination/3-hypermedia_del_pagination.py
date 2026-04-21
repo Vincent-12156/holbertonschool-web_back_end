@@ -53,7 +53,6 @@ class Server:
         result_data = []
         current_index = index
 
-        # Collect items while skipping deleted indices
         while len(result_data) < page_size and current_index < len(data):
             if current_index in data:
                 result_data.append(data[current_index])
