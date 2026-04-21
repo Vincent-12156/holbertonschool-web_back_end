@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Module that provides simple pagination utilities for a CSV dataset.
+Module that provides hypermedia pagination for a CSV dataset.
 """
 
 import csv
 import math
-from typing import List, Tuple
+from typing import List, Tuple, Dict, Optional
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
@@ -25,7 +25,7 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
-        """Initialize the server with no cached dataset."""
+        """Initialize server with no cached dataset."""
         self.__dataset = None
 
     def dataset(self) -> List[List]:
@@ -54,3 +54,25 @@ class Server:
             return []
 
         return data[start:end]
+
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        """
+        Return hypermedia pagination information for the dataset.
+        """
+        data_page = self.get_page(page, page_size)
+        data = self.dataset()
+        total_items = len(data)
+
+        total_pages = math.ceil(total_items / page_size)
+
+        next_page: Optional[int] = page + 1 if page + 1 <= total_pages else None
+        prev_page: Optional[int] = page - 1 if page > 1 else None
+
+        return {
+            "page_size": len(data_page),
+            "page": page,
+            "data": data_page,
+            "next_page": next_page,
+            "prev_page": prev_page,
+            "total_pages": total_pages,
+        }
