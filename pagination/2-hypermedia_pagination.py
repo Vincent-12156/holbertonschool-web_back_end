@@ -65,7 +65,9 @@ class Server:
 
         total_pages = math.ceil(total_items / page_size)
 
-        next_page: Optional[int] = page + 1 if page + 1 <= total_pages else None
+        next_page: Optional[int] = {
+            page + 1 if page + 1 <= total_pages else None
+        }
         prev_page: Optional[int] = page - 1 if page > 1 else None
 
         return {
