@@ -1,1 +1,3 @@
+// list all databases in MondoDB shell
+
 show dbs
