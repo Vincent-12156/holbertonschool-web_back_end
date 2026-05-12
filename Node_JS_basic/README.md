@@ -75,7 +75,7 @@ app.listen(1245);
 module.exports = app;
 ```
 
-## Example: Node Server
+## Example: Another Basic HTTP Node Server
 ```
 const { createServer } = require('node:http');
 
