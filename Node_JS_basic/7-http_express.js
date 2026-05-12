@@ -14,11 +14,11 @@ app.get('/students', (req, res) => {
   res.write('This is the list of our students\n');
 
   countStudents(database)
-    .then(() => {
-      res.end();
-    })
     .catch(() => {
-      res.end('Cannot load the database');
+      res.write('Cannot load the database');
+    })
+    .finally(() => {
+      res.end();
     });
 });
 
